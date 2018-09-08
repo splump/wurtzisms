@@ -2,12 +2,10 @@ import setuptools
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
-with open('requirements.txt') as f:
-    required = f.read().splitlines()
 
 setuptools.setup(
     name="wurtzisms",
-    version="0.0.1",
+    version="1.0.0",
     author="Daniel Andersson",
     author_email="wurtz@muthur6000.se",
     description="Your daily wurtzisms delivered straight to your shell",
@@ -25,5 +23,5 @@ setuptools.setup(
             'wurtzisms = wurtzisms.__main__:main'
         ]
     },
-    install_requires=required
+    install_requires=['beautifulsoup4==4.6.3', 'requests==2.19.1']
 )
