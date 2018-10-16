@@ -6,6 +6,7 @@ import time
 import argparse
 import sqlite3
 import os
+import sys
 from bs4 import BeautifulSoup
 
 
@@ -99,22 +100,41 @@ def get_wurtzism():
 def main():
     parser = argparse.ArgumentParser(description='Wisdom from Bill Wurtz')
     parser.add_argument('--instant', action='store_true', default=False, help='Print instantly')
+    parser.add_argument('--endless', action='store_true', default=False, help='Print continuously')
     parser.add_argument('--debug', action='store_true', default=False, help='Output debug information')
     global args
     args = parser.parse_args()
 
-    wurtzism = get_wurtzism()
-
-    if args.instant:
-        print(wurtzism)
+    if args.endless:
+        print('Press Ctrl+C to exit\n')
+        while True:
+            wurtzism = get_wurtzism()
+            if args.instant:
+                print(wurtzism)
+            else:
+                for char in wurtzism:
+                    print(char, end='', flush=True)
+                    # Randomize delay to simulate typing
+                    sleep_duration = random.randrange(1, 17, 1) / 100
+                    time.sleep(sleep_duration)
+            print()
+            time.sleep(5)
     else:
-        for char in wurtzism:
-            print(char, end='', flush=True)
-            # Randomize delay to simulate typing
-            sleep_duration = random.randrange(1, 17, 1) / 100
-            time.sleep(sleep_duration)
-        print()
+        wurtzism = get_wurtzism()
+        if args.instant:
+            print(wurtzism)
+        else:
+            for char in wurtzism:
+                print(char, end='', flush=True)
+                # Randomize delay to simulate typing
+                sleep_duration = random.randrange(1, 17, 1) / 100
+                time.sleep(sleep_duration)
+            print()
 
 
 if __name__ == '__main__':
-    main()
+    try:
+        main()
+    except KeyboardInterrupt:
+        print("Exiting...")
+        sys.exit()
