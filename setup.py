@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="wurtzisms",
-    version="1.0.0",
+    version="1.0.1",
     author="Daniel Andersson",
     author_email="wurtz@muthur6000.se",
     description="Your daily wurtzisms delivered straight to your shell",
