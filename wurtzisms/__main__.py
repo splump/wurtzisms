@@ -117,6 +117,7 @@ def main():
                     # Randomize delay to simulate typing
                     sleep_duration = random.randrange(1, 17, 1) / 100
                     time.sleep(sleep_duration)
+                print()
             print()
             time.sleep(5)
     else:
