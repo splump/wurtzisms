@@ -79,6 +79,7 @@ def refresh_cache(db):
 
     if len(links) > num_notes:
         # Insert all links that do not exist in notes
+        print("Refreshing cache, please wait...\n")
         notes = c.execute("SELECT link FROM notes;").fetchall()
         notes = [n[0] for n in notes]
         for link in links:
