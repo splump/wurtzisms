@@ -6,6 +6,7 @@ import time
 import argparse
 import sqlite3
 import os
+import sys
 from bs4 import BeautifulSoup
 
 
@@ -78,6 +79,7 @@ def refresh_cache(db):
 
     if len(links) > num_notes:
         # Insert all links that do not exist in notes
+        print("Refreshing cache, please wait...\n")
         notes = c.execute("SELECT link FROM notes;").fetchall()
         notes = [n[0] for n in notes]
         for link in links:
@@ -88,8 +90,7 @@ def refresh_cache(db):
         db.commit()
 
 
-def get_wurtzism():
-    db = init_cache(CACHE_PATH, CACHE_NAME)
+def get_wurtzism(db):
     c = db.cursor()
 
     random_note = c.execute("SELECT * FROM notes ORDER BY random() LIMIT 1").fetchone()[1]
@@ -99,22 +100,35 @@ def get_wurtzism():
 def main():
     parser = argparse.ArgumentParser(description='Wisdom from Bill Wurtz')
     parser.add_argument('--instant', action='store_true', default=False, help='Print instantly')
+    parser.add_argument('--endless', action='store_true', default=False, help='Print continuously')
     parser.add_argument('--debug', action='store_true', default=False, help='Output debug information')
     global args
     args = parser.parse_args()
 
-    wurtzism = get_wurtzism()
+    db = init_cache(CACHE_PATH, CACHE_NAME)
 
-    if args.instant:
-        print(wurtzism)
-    else:
-        for char in wurtzism:
-            print(char, end='', flush=True)
-            # Randomize delay to simulate typing
-            sleep_duration = random.randrange(1, 17, 1) / 100
-            time.sleep(sleep_duration)
+    if args.endless:
+        print('Press Ctrl+C to exit\n')
+    while True:
+        wurtzism = get_wurtzism(db)
+        if args.instant:
+            print(wurtzism)
+        else:
+            for char in wurtzism:
+                print(char, end='', flush=True)
+                # Randomize delay to simulate typing
+                sleep_duration = random.randrange(1, 17, 1) / 100
+                time.sleep(sleep_duration)
+            print()
+        if not args.endless:
+            return
         print()
+        time.sleep(5)
 
 
 if __name__ == '__main__':
-    main()
+    try:
+        main()
+    except KeyboardInterrupt:
+        print("Exiting...")
+        sys.exit()
