@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="wurtzisms",
-    version="1.0.1",
+    version="1.1.0",
     author="Daniel Andersson",
     author_email="wurtz@muthur6000.se",
     description="Your daily wurtzisms delivered straight to your shell",
@@ -23,5 +23,8 @@ setuptools.setup(
             'wurtzisms = wurtzisms.__main__:main'
         ]
     },
-    install_requires=['beautifulsoup4==4.6.3', 'requests==2.19.1']
+    install_requires=[
+        'beautifulsoup4~=4.6',  # 4.6 or later, below major version 5
+        'requests~=2.19'  # 2.19 or later, below major version 3
+    ]
 )
