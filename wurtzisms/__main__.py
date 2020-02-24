@@ -86,7 +86,7 @@ def refresh_cache(db):
             if link not in notes:
                 note_url = session.get(SITE + link)
                 note_soup = BeautifulSoup(note_url.text, features='html.parser')
-                c.execute("INSERT INTO notes(link, note) VALUES(?, ?)", (link, note_soup.text.lstrip()))
+                c.execute("INSERT OR IGNORE INTO notes(link, note) VALUES(?, ?)", (link, note_soup.text.lstrip()))
         db.commit()
 
 
