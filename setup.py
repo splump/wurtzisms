@@ -5,10 +5,10 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="wurtzisms",
-    version="1.1.0",
+    version="1.1.1",
     author="Daniel Andersson",
     author_email="wurtz@muthur6000.se",
-    description="Your daily wurtzisms delivered straight to your shell",
+    description="print wurtzism in your shell",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/splump/wurtzisms",
